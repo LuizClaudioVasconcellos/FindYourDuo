@@ -12,12 +12,13 @@ import { styles } from "./styles";
 import { GameParams } from "../../@types/navigation";
 
 import { DuoCard, DuoCardProps } from "../../components/DuoCard";
-import { Heading } from "../../components/Heading";
 import { Background } from "../../components/Background";
-import { Inter_500Medium } from "@expo-google-fonts/inter";
+import { DuoMatch } from "../../components/DuoMatch";
+import { Heading } from "../../components/Heading";
 
 export function Game() {
   const [duos, setDuos] = useState<DuoCardProps[]>([]);
+  const [discordDuoSelected, setDiscodDuoSelected] = useState("Diablo#666");
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -28,7 +29,7 @@ export function Game() {
   }
 
   useEffect(() => {
-    fetch(`http://192.168.1.14:3333/games/${game.id}/ads`)
+    fetch(`http://192.168.1.9:3333/games/${game.id}/ads`)
       .then((response) => response.json())
       .then((data) => setDuos(data));
   }, []);
@@ -75,6 +76,12 @@ export function Game() {
               Não há anúncios publicados ainda.
             </Text>
           )}
+        />
+
+        <DuoMatch
+          visible={discordDuoSelected.length > 0}
+          discord="Diablo#666"
+          onClose={() => setDiscodDuoSelected("")}
         />
       </SafeAreaView>
     </Background>
